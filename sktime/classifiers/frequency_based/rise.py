@@ -59,7 +59,7 @@ class RandomIntervalSpectralForest(ForestClassifier):
     """
 
     def __init__(self,
-                 n_trees=200,
+                 n_trees=500,
                  random_state=None,
                  min_interval=16,
                  acf_lag=100,
