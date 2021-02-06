@@ -113,7 +113,7 @@ def set_classifier(cls, resampleId=None):
         return ProximityStump(random_state=resampleId)
     elif name == "dtw":
         return KNeighborsTimeSeriesClassifier(metric="dtw")
-    elif name == "euclidean":
+    elif name == "euclidean" or name == "ed":
         return KNeighborsTimeSeriesClassifier(metric="euclidean")
     elif name == "ee" or name == "elasticensemble":
         return ElasticEnsemble()
@@ -582,25 +582,25 @@ if __name__ == "__main__":
         #         data_dir = "/bench/datasets/Univariate2018/"
         #         results_dir = "C:/Users/ajb/Dropbox/Turing Project/Results/"
         print(" Local Run")
-        data_dir = "C:/Code/sktime/sktime/datasets/data/"
-        results_dir = "C:/Temp/"
+        data_dir = "Z:/ArchiveData/Univariate_arff/"
+        results_dir = "Z:/Results Working Area/DistanceBased/"
         #        results_dir = "Z:/Results/sktime Bakeoff/"
         dataset = "UnitTest"
         trainX, trainY = load_ts(data_dir + dataset + "/" + dataset + "_TRAIN.ts")
         testX, testY = load_ts(data_dir + dataset + "/" + dataset + "_TEST.ts")
-        classifier = "KNeighborsTimeSeriesClassifier"
+        classifier = "euclidean"
         resample = 0
-        #         for i in range(0, len(univariate_datasets)):
-        #             dataset = univariate_datasets[i]
-        # #            print(i)
-        # #            print(" problem = "+dataset)
-        tf = False
-        run_experiment(
-            overwrite=True,
-            problem_path=data_dir,
-            results_path=results_dir,
-            cls_name=classifier,
-            dataset=dataset,
-            resampleID=resample,
-            train_file=tf,
-        )
+        for i in range(0, len(dataset_lists.univariate_datasets)):
+            dataset = dataset_lists.univariate_datasets[i]
+            print(i)
+            print(" problem = "+dataset)
+            tf = False
+            run_experiment(
+                overwrite=True,
+                problem_path=data_dir,
+                results_path=results_dir,
+                cls_name=classifier,
+                dataset=dataset,
+                resampleID=resample,
+                train_file=tf,
+            )
