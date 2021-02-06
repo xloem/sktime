@@ -111,10 +111,12 @@ def set_classifier(cls, resampleId=None):
         return ProximityTree(random_state=resampleId)
     elif name == "ps" or name == "proximityStump":
         return ProximityStump(random_state=resampleId)
-    elif name == "dtw":
+    elif name == "dtw" or name == "1nn-dtw":
         return KNeighborsTimeSeriesClassifier(metric="dtw")
-    elif name == "euclidean" or name == "ed":
+    elif name == "euclidean" or name == "ed" or name == "1nn-ed":
         return KNeighborsTimeSeriesClassifier(metric="euclidean")
+    elif name == "dtwcv" or name == "1nn-dtwcv":
+        return KNeighborsTimeSeriesClassifier(metric="dtwcv")
     elif name == "ee" or name == "elasticensemble":
         return ElasticEnsemble()
     elif name == "shapedtw":
@@ -582,21 +584,22 @@ if __name__ == "__main__":
         #         data_dir = "/bench/datasets/Univariate2018/"
         #         results_dir = "C:/Users/ajb/Dropbox/Turing Project/Results/"
         print(" Local Run")
-        data_dir = "Z:/ArchiveData/Univariate_arff/"
-        results_dir = "Z:/Results Working Area/DistanceBased/"
+        data_dir = "Z:/ArchiveData/Univariate_ts/"
+        results_dir = "Z:/Results Working Area/DistanceBased/sktime/"
         #        results_dir = "Z:/Results/sktime Bakeoff/"
-        dataset = "UnitTest"
-        trainX, trainY = load_ts(data_dir + dataset + "/" + dataset + "_TRAIN.ts")
-        testX, testY = load_ts(data_dir + dataset + "/" + dataset + "_TEST.ts")
-        classifier = "euclidean"
+        classifier = "1NN-ED"
         resample = 0
-        for i in range(0, len(dataset_lists.univariate_datasets)):
-            dataset = dataset_lists.univariate_datasets[i]
+        for i in range(0, len(dataset_lists.univariate)):
+            dataset = dataset_lists.univariate[i]
+            if dataset == "Crop" or dataset == "ElectricDevices":
+                continue
+            trainX, trainY = load_ts(data_dir + dataset + "/" + dataset + "_TRAIN.ts")
+            testX, testY = load_ts(data_dir + dataset + "/" + dataset + "_TEST.ts")
             print(i)
             print(" problem = "+dataset)
             tf = False
             run_experiment(
-                overwrite=True,
+                overwrite=False,
                 problem_path=data_dir,
                 results_path=results_dir,
                 cls_name=classifier,
