@@ -21,6 +21,7 @@ from sktime.utils.slope_and_trend import _slope
 import sktime.classification.interval_based._tsf as ib
 import sktime.classification.interval_based._rise as fb
 import sktime.classification.dictionary_based._boss as db
+import sktime.classification.dictionary_based._tde as td
 import sktime.classification.distance_based._time_series_neighbors as dist
 import sktime.contrib.experiments as exp
 
@@ -126,8 +127,8 @@ benchmark_datasets = [
     "Yoga",
 ]
 
-data_dir = "Z:/ArchiveData/Univariate_ts/"
-results_dir = "Z:/Benchmarking/"
+data_dir = "../datasets/data/"
+results_dir = "C:/Temp/"
 
 
 def acf_coefs(x, maxlag=100):
@@ -270,31 +271,39 @@ def boss_benchmarking():
 
 distance_test = [
     "UnitTest",
-    "ItalyPowerDemand",
+#    "ItalyPowerDemand",
 ]
 
 
 def elastic_distance_benchmarking():
     for i in range(0, int(len(distance_test))):
         dataset = distance_test[i]
-        print(str(i) + " problem = " + dataset + " writing to " + results_dir + "/DTW/")
-        dtw = dist.KNeighborsTimeSeriesClassifier(metric="dtw")
+        print(str(i) + " problem = " + dataset + " writing to " + results_dir + "/dtw/")
+        ed = dist.KNeighborsTimeSeriesClassifier(metric="dtw")
         exp.run_experiment(
-            overwrite=False,
+            overwrite=True,
             problem_path=data_dir,
-            results_path=results_dir + "/DTW/",
+            results_path=results_dir + "/dtw/",
             cls_name="PythonDTW",
-            classifier=dtw,
+            classifier=ed,
             dataset=dataset,
             train_file=False,
         )
-        twe = dist.KNeighborsTimeSeriesClassifier(metric="dtw")
+
+
+def tde_benchmarking():
+    for i in range(0, int(len(benchmark_datasets))):
+        dataset = benchmark_datasets[i]
+        print(
+            str(i) + " problem = " + dataset + " writing to " + results_dir + "/TDE/"
+        )
+        tde = td.TemporalDictionaryEnsemble()
         exp.run_experiment(
             overwrite=False,
             problem_path=data_dir,
-            results_path=results_dir + "/DTW/",
-            cls_name="PythonTWE",
-            classifier=twe,
+            results_path=results_dir + "/TDE/",
+            cls_name="PythonBOSS",
+            classifier=tde,
             dataset=dataset,
             train_file=False,
         )
@@ -305,3 +314,4 @@ if __name__ == "__main__":
     #    rise_benchmarking()
     #    boss_benchmarking()
     elastic_distance_benchmarking()
+    # tde_benchmarking()
