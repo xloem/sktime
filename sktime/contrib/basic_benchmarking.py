@@ -313,5 +313,16 @@ if __name__ == "__main__":
     #    tsf_benchmarking()
     #    rise_benchmarking()
     #    boss_benchmarking()
-    elastic_distance_benchmarking()
-    # tde_benchmarking()
+     # elastic_distance_benchmarking()
+    # tde_be
+    arr = np.arange(24).reshape((2, 3, 4))
+    print(arr)
+    print(arr.shape)
+    print(arr[0][1][2])
+    print(" Arr strides =",arr.strides)
+    arr = arr.transpose((0, 2, 1))
+    print(arr.shape)
+    print(arr)
+    print(" Arr strides =",arr.strides)
+    print(arr[0][1][2])
+
