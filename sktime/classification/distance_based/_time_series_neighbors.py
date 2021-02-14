@@ -105,6 +105,7 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
     """
 
     # Capabilities: data types this classifier can handle
+    # It is assumed that all classifiers can handle equal length univariate problems with no missing
     capabilities = {
         "multivariate": False,
         "unequal_length": False,
@@ -115,28 +116,14 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
         self,
         n_neighbors=1,
         weights="uniform",
-        algorithm="brute",
         metric="dtw",
         metric_params=None,
         **kwargs
     ):
-        if algorithm == "kd_tree":
-            raise ValueError(
-                "KNeighborsTimeSeriesClassifier cannot work with kd_tree since kd_tree "
-                "cannot be used with a callable distance metric and we do not support "
-                "precalculated distances as yet."
-            )
-        if algorithm == "ball_tree":
-            raise ValueError(
-                "KNeighborsTimeSeriesClassifier cannot work with ball_tree since "
-                "ball_tree has a list of hard coded distances it can use, and cannot "
-                "work with 3-D arrays"
-            )
-
         self._cv_for_params = False
         if metric == "euclidean":  # Euclidean will default to the base class distance
             metric = euclidean_distance
-        if metric == "dtw":
+        elif metric == "dtw":
             metric = dtw_distance
         elif metric == "dtwcv":  # special case to force loocv grid search
             # cv in training
@@ -181,7 +168,7 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
 
         super(KNeighborsTimeSeriesClassifier, self).__init__(
             n_neighbors=n_neighbors,
-            algorithm=algorithm,
+            algorithm="brute",
             metric=metric,
             metric_params=metric_params,
             **kwargs
@@ -211,7 +198,8 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
         # find the best, and then set this classifier's params to match
 
         # Transpose X to work properly with distance functions
-        X.transpose(0, 2, 1)
+        X = X.transpose((0, 2, 1))
+        print(" Shape of train = ",X.shape)
         if self._cv_for_params:
             grid = GridSearchCV(
                 estimator=KNeighborsTimeSeriesClassifier(
@@ -305,7 +293,7 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
         self.check_is_fitted()
         X = check_X(X, enforce_univariate=False, coerce_to_numpy=True)
         # Transpose to work with distance functions
-        X.transpose(0, 2, 1)
+        X = X.transpose((0, 2, 1))
         if n_neighbors is None:
             n_neighbors = self.n_neighbors
         elif n_neighbors <= 0:
@@ -337,56 +325,36 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
         sample_range = np.arange(n_samples)[:, None]
 
         n_jobs = effective_n_jobs(self.n_jobs)
-        if self._fit_method == "brute":
-
-            reduce_func = partial(
-                self._kneighbors_reduce_func,
-                n_neighbors=n_neighbors,
-                return_distance=return_distance,
-            )
-
-            # for efficiency, use squared euclidean distances
-            kwds = (
-                {"squared": True}
-                if self.effective_metric_ == "euclidean"
-                else self.effective_metric_params_
-            )
-
-            result = pairwise_distances_chunked(
-                X,
-                self._fit_X,
-                reduce_func=reduce_func,
-                metric=self.effective_metric_,
-                n_jobs=n_jobs,
-                **kwds
-            )
-
-        elif self._fit_method in ["ball_tree", "kd_tree"]:
-            if issparse(X):
-                raise ValueError(
-                    "%s does not work with sparse matrices. Densify the data, "
-                    "or set algorithm='brute'" % self._fit_method
-                )
-            if LooseVersion(joblib_version) < LooseVersion("0.12"):
-                # Deal with change of API in joblib
-                delayed_query = delayed(self._tree.query, check_pickle=False)
-                parallel_kwargs = {"backend": "threading"}
-            else:
-                delayed_query = delayed(self._tree.query)
-                parallel_kwargs = {"prefer": "threads"}
-            result = Parallel(n_jobs, **parallel_kwargs)(
-                delayed_query(X[s], n_neighbors, return_distance)
-                for s in gen_even_slices(X.shape[0], n_jobs)
-            )
-        else:
-            raise ValueError("internal: _fit_method not recognized")
-
+        # Only works with brute
+        reduce_func = partial(
+            self._kneighbors_reduce_func,
+            n_neighbors=n_neighbors,
+            return_distance=return_distance,
+        )
+        print(" effective metric params = ",self.effective_metric_params_)
+        kwds = self.effective_metric_params_
+        # for efficiency, use squared euclidean distances
+        # kwds = (
+        #    {"squared": True}
+        #    if self.effective_metric_ == "euclidean"
+        #    else self.effective_metric_params_
+        # )
+        print(" metric  = ",self.metric," effective metric  = ",self.effective_metric_)
+        result = pairwise_distances_chunked(
+            X,
+            self._fit_X,
+            reduce_func=reduce_func,
+            metric=self.effective_metric_,
+            n_jobs=n_jobs,
+            **kwds
+        )
+        print(" Results = ", result, " return distance = ",return_distance)
         if return_distance:
             dist, neigh_ind = zip(*result)
             result = np.vstack(dist), np.vstack(neigh_ind)
         else:
             result = np.vstack(result)
-
+        print(neigh_ind[0][0],",",dist[0][0])
         if not query_is_train:
             return result
         else:
@@ -437,6 +405,7 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
         else:
             temp = check_array.__code__
             check_array.__code__ = _check_array_ts.__code__
+        print(" Shape of test in predict = ",X.shape)
 
         neigh_dist, neigh_ind = self.kneighbors(X)
         classes_ = self.classes_
@@ -495,6 +464,7 @@ class KNeighborsTimeSeriesClassifier(_KNeighborsClassifier, BaseClassifier):
             check_array.__code__ = _check_array_ts.__code__
 
         X = check_array(X, accept_sparse="csr")
+        print(" Shape of test in predict proba (still a panda) = ",X.shape)
 
         neigh_dist, neigh_ind = self.kneighbors(X)
 

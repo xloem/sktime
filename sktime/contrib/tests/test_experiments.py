@@ -20,7 +20,7 @@ class TestStats:
         unequal_length=False,
         missing_values=False,
     ):
-        self.chinatown_acc = unit_test_acc
+        self.test_acc = unit_test_acc
         self.multivariate = multivariate
         self.unequal_length = unequal_length
         self.missing_values = missing_values

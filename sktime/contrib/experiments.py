@@ -117,6 +117,10 @@ def set_classifier(cls, resampleId=None):
         return KNeighborsTimeSeriesClassifier(metric="euclidean")
     elif name == "dtwcv" or name == "1nn-dtwcv":
         return KNeighborsTimeSeriesClassifier(metric="dtwcv")
+    elif name == "msm" or name == "1nn-msm":
+        return KNeighborsTimeSeriesClassifier(metric="msm")
+    elif name == "wdtw" or name == "1nn-wdtw":
+        return KNeighborsTimeSeriesClassifier(metric="wdtw")
     elif name == "ee" or name == "elasticensemble":
         return ElasticEnsemble()
     elif name == "shapedtw":
@@ -610,7 +614,6 @@ univariate = [
     "Mallat",
     "Meat",
     "MedicalImages",
-    "MelbournePedestrian",
     "MiddlePhalanxOutlineCorrect",
     "MiddlePhalanxOutlineAgeGroup",
     "MiddlePhalanxTW",
@@ -621,7 +624,6 @@ univariate = [
     "OSULeaf",
     "PhalangesOutlinesCorrect",
     "Phoneme",
-    "PickupGestureWiimoteZ",
     "Plane",
     "PowerCons",
     "ProximalPhalanxOutlineCorrect",
@@ -629,14 +631,12 @@ univariate = [
     "ProximalPhalanxTW",
     "RefrigerationDevices",
     "Rock",
-    "ScreenType",
     "ShapeletSim",
     "ShapesAll",
     "SmallKitchenAppliances",
     "SmoothSubspace",
     "SonyAIBORobotSurface1",
     "SonyAIBORobotSurface2",
-    "StarlightCurves",
     "Strawberry",
     "SwedishLeaf",
     "Symbols",
@@ -687,7 +687,7 @@ if __name__ == "__main__":
         data_dir = "Z:/ArchiveData/Univariate_ts/"
         results_dir = "Z:/Results Working Area/DistanceBased/sktime/"
         #        results_dir = "Z:/Results/sktime Bakeoff/"
-        classifier = "1NN-ED"
+        classifier = "1NN-DTW"
         resample = 0
         for i in range(0, len(univariate)):
             dataset = univariate[i]
@@ -697,7 +697,7 @@ if __name__ == "__main__":
             print(" problem = "+dataset)
             tf = False
             run_experiment(
-                overwrite=False,
+                overwrite=True,
                 problem_path=data_dir,
                 results_path=results_dir,
                 cls_name=classifier,

@@ -279,12 +279,12 @@ def elastic_distance_benchmarking():
     for i in range(0, int(len(distance_test))):
         dataset = distance_test[i]
         print(str(i) + " problem = " + dataset + " writing to " + results_dir + "/dtw/")
-        ed = dist.KNeighborsTimeSeriesClassifier(metric="dtw")
+        ed = dist.KNeighborsTimeSeriesClassifier(metric="ed")
         exp.run_experiment(
             overwrite=True,
             problem_path=data_dir,
-            results_path=results_dir + "/dtw/",
-            cls_name="PythonDTW",
+            results_path=results_dir + "/ed/",
+            cls_name="1-NN-ED",
             classifier=ed,
             dataset=dataset,
             train_file=False,
@@ -309,20 +309,9 @@ def tde_benchmarking():
         )
 
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     #    tsf_benchmarking()
     #    rise_benchmarking()
     #    boss_benchmarking()
-     # elastic_distance_benchmarking()
-    # tde_be
-    arr = np.arange(24).reshape((2, 3, 4))
-    print(arr)
-    print(arr.shape)
-    print(arr[0][1][2])
-    print(" Arr strides =",arr.strides)
-    arr = arr.transpose((0, 2, 1))
-    print(arr.shape)
-    print(arr)
-    print(" Arr strides =",arr.strides)
-    print(arr[0][1][2])
+    #   elastic_distance_benchmarking()
 
