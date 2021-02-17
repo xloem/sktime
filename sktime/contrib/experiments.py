@@ -111,7 +111,9 @@ def set_classifier(cls, resampleId=None):
         return ProximityTree(random_state=resampleId)
     elif name == "ps" or name == "proximityStump":
         return ProximityStump(random_state=resampleId)
-    elif name == "dtwcv" or name == "kneighborstimeseriesclassifier":
+    elif name == "ed":
+        return KNeighborsTimeSeriesClassifier(metric="euclidean")
+    elif name == "dtw" or name == "kneighborstimeseriesclassifier":
         return KNeighborsTimeSeriesClassifier(metric="dtw")
     elif name == "ee" or name == "elasticensemble":
         return ElasticEnsemble()
