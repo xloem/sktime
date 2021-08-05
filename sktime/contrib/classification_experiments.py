@@ -8,10 +8,7 @@ single debugging runs. Results are written in a standard format
 import os
 import sys
 import time
-import pandas as pd
 
-import sklearn.preprocessing
-import sklearn.utils
 from sklearn.ensemble import RandomForestClassifier
 
 from sktime.classification.dictionary_based import (
@@ -48,9 +45,8 @@ from sktime.classification.shapelet_based import ShapeletTransformClassifier
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
-from sktime.utils.data_io import load_from_tsfile_to_dataframe as load_ts
+from datasets.data_io import load_from_tsfile_to_dataframe as load_ts
 import sktime.datasets.tsc_dataset_names as dataset_lists
-import sktime.utils.sampling
 
 os.environ["MKL_NUM_THREADS"] = "1"  # must be done before numpy import!!
 os.environ["NUMEXPR_NUM_THREADS"] = "1"  # must be done before numpy import!!

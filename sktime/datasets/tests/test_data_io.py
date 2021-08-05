@@ -4,11 +4,11 @@ import tempfile
 import pytest
 import numpy as np
 import pandas as pd
-from sktime.utils.data_io import TsFileParseException
-from sktime.utils.data_io import load_from_tsfile_to_dataframe
-from sktime.utils.data_io import load_from_long_to_dataframe
-from sktime.utils.data_io import LongFormatDataParseException
-from sktime.utils.data_io import generate_example_long_table
+from datasets.data_io import TsFileParseException
+from datasets.data_io import load_from_tsfile_to_dataframe
+from datasets.data_io import load_from_long_to_dataframe
+from datasets.data_io import LongFormatDataParseException
+from datasets.data_io import generate_example_long_table
 
 
 def test_load_from_tsfile_to_dataframe():

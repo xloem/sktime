@@ -9,7 +9,7 @@ from urllib.request import urlretrieve
 import numpy as np
 import pandas as pd
 
-from sktime.utils.data_io import load_from_tsfile_to_dataframe
+from datasets.data_io import load_from_tsfile_to_dataframe
 
 __all__ = [
     "load_airline",
