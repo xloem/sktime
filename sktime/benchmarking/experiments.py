@@ -16,8 +16,8 @@ import time
 import numpy as np
 
 from sklearn import preprocessing
-from datasets.data_io import write_results_to_uea_format
-from datasets.data_io import load_from_tsfile_to_dataframe as load_ts
+from datasets.data_io_depreciated import write_results_to_uea_format
+from datasets._data_io import load_from_tsfile_to_dataframe as load_ts
 from sktime.utils.sampling import stratified_resample
 from sktime.clustering import (
     TimeSeriesKMeans,

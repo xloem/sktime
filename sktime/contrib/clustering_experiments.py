@@ -9,7 +9,7 @@ __author__ = ["Tony Bagnall"]
 import os
 import sys
 import sktime.datasets.tsc_dataset_names as dataset_lists
-from datasets.data_io import load_from_tsfile_to_dataframe as load_ts
+from datasets._data_io import load_from_tsfile_to_dataframe as load_ts
 
 from sktime.clustering import (
     TimeSeriesKMeans,

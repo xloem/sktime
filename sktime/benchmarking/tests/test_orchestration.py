@@ -28,7 +28,7 @@ from sktime.benchmarking.strategies import TSCStrategy
 from sktime.benchmarking.tasks import TSCTask
 from sktime.classification.distance_based import KNeighborsTimeSeriesClassifier
 from sktime.datasets import load_arrow_head
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 from sktime.classification.compose import ComposableTimeSeriesForestClassifier
 from sktime.series_as_features.model_selection import SingleSplit
 from sktime.transformations.panel.reduce import Tabularizer

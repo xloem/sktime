@@ -7,7 +7,7 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.preprocessing import StandardScaler
 
 from sktime.datasets import load_basic_motions
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 from sktime.transformations.panel.compose import ColumnTransformer
 from sktime.transformations.panel.compose import (
     SeriesToPrimitivesRowTransformer,

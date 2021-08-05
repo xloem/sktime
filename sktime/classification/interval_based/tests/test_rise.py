@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 from sktime.classification.interval_based import RandomIntervalSpectralForest
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 
 # expected y_proba
 expected = np.array(

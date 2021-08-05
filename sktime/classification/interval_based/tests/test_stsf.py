@@ -4,7 +4,8 @@ import numpy as np
 from numpy import testing
 
 from sktime.classification.interval_based import SupervisedTimeSeriesForest
-from sktime.datasets import load_gunpoint, load_italy_power_demand
+from sktime.datasets import load_italy_power_demand
+from datasets import load_gunpoint
 
 
 def test_stsf_on_gunpoint():

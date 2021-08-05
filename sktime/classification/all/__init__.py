@@ -22,7 +22,6 @@ __all__ = [
     "ColumnEnsembleClassifier",
     "pd",
     "np",
-    "load_gunpoint",
     "load_osuleaf",
     "load_basic_motions",
     "load_arrow_head",
@@ -50,5 +49,5 @@ from sktime.classification.shapelet_based import ShapeletTransformClassifier
 from sktime.classification.kernel_based import ROCKETClassifier
 from sktime.datasets import load_arrow_head
 from sktime.datasets import load_basic_motions
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 from sktime.datasets import load_osuleaf

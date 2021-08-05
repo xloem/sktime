@@ -3,7 +3,7 @@
 from sklearn.metrics import accuracy_score
 
 from sktime.classification.feature_based import SignatureClassifier
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 
 
 def test_signatures_on_gunpoint():

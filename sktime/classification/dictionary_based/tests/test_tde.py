@@ -6,7 +6,8 @@ from sktime.classification.dictionary_based._tde import (
     TemporalDictionaryEnsemble,
     IndividualTDE,
 )
-from sktime.datasets import load_gunpoint, load_italy_power_demand, load_basic_motions
+from sktime.datasets import load_italy_power_demand, load_basic_motions
+from datasets import load_gunpoint
 
 
 def test_tde_on_gunpoint():

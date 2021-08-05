@@ -3,7 +3,8 @@
 # from numpy import testing
 
 from sktime.classification.dictionary_based import WEASEL
-from sktime.datasets import load_gunpoint, load_italy_power_demand
+from sktime.datasets import load_italy_power_demand
+from datasets import load_gunpoint
 
 
 def test_weasel_on_gunpoint():

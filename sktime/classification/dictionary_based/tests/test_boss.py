@@ -3,7 +3,8 @@ import numpy as np
 from numpy import testing
 
 from sktime.classification.dictionary_based import BOSSEnsemble, IndividualBOSS
-from sktime.datasets import load_gunpoint, load_italy_power_demand
+from sktime.datasets import load_italy_power_demand
+from datasets import load_gunpoint
 
 
 def test_boss_on_gunpoint():

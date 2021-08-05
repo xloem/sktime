@@ -2,7 +2,7 @@
 
 import numpy as np
 from sktime.classification.shapelet_based import MrSEQLClassifier
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 
 
 def test_mrseql_on_gunpoint():

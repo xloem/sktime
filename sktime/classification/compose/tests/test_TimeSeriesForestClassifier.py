@@ -7,7 +7,7 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.tree import DecisionTreeClassifier
 
 from sktime.classification.compose import ComposableTimeSeriesForestClassifier
-from sktime.datasets import load_gunpoint
+from datasets import load_gunpoint
 from sktime.transformations.panel.compose import (
     SeriesToPrimitivesRowTransformer,
 )

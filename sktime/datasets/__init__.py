@@ -4,7 +4,6 @@
 __all__ = [
     "load_airline",
     "load_arrow_head",
-    "load_gunpoint",
     "load_basic_motions",
     "load_osuleaf",
     "load_italy_power_demand",
@@ -16,10 +15,12 @@ __all__ = [
     "load_unit_test",
     "load_uschange",
     "load_PBS_dataset",
+    "load_from_tsfile_to_dataframe",
+    "load_from_arff_to_dataframe",
 ]
 
 from sktime.datasets._data_io import load_airline
-from sktime.datasets._data_io import load_gunpoint
+from datasets._single_dataset_loaders import load_gunpoint
 from sktime.datasets._data_io import load_arrow_head
 from sktime.datasets._data_io import load_basic_motions
 from sktime.datasets._data_io import load_osuleaf
@@ -32,3 +33,5 @@ from sktime.datasets._data_io import load_UCR_UEA_dataset
 from sktime.datasets._data_io import load_unit_test
 from sktime.datasets._data_io import load_uschange
 from sktime.datasets._data_io import load_PBS_dataset
+from sktime.datasets._data_io import load_from_tsfile_to_dataframe
+from sktime.datasets._data_io import load_from_arff_to_dataframe

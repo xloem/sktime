@@ -10,8 +10,7 @@ from pandas._testing import assert_frame_equal
 
 import sktime
 
-from datasets.data_io import load_from_tsfile_to_dataframe
-from datasets.data_io import write_dataframe_to_tsfile
+from datasets._data_io import load_from_tsfile_to_dataframe, write_dataframe_to_tsfile
 
 
 def test_write_dataframe_to_ts_success(tmp_path):

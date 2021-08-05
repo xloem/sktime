@@ -4,7 +4,8 @@ import numpy as np
 from numpy import testing
 
 from sktime.classification.feature_based import MatrixProfileClassifier
-from sktime.datasets import load_gunpoint, load_italy_power_demand
+from sktime.datasets import load_italy_power_demand
+from datasets import load_gunpoint
 
 
 def test_matrix_profile_classifier_on_gunpoint():

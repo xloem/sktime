@@ -45,7 +45,7 @@ from sktime.classification.shapelet_based import ShapeletTransformClassifier
 from sklearn import preprocessing
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import cross_val_predict
-from datasets.data_io import load_from_tsfile_to_dataframe as load_ts
+from datasets._data_io import load_from_tsfile_to_dataframe as load_ts
 import sktime.datasets.tsc_dataset_names as dataset_lists
 
 os.environ["MKL_NUM_THREADS"] = "1"  # must be done before numpy import!!
